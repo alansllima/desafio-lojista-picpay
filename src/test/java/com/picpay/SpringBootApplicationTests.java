@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class PicpayApplicationTests {
+class SpringBootApplicationTests {
 
 	@Autowired
 	private WebTestClient webTestClient;
