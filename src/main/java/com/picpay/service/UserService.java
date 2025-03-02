@@ -4,6 +4,7 @@ import com.picpay.domain.transaction.TransactionDTO;
 import com.picpay.domain.user.User;
 import com.picpay.domain.user.UserDTO;
 import com.picpay.exception.EntityNotFoundException;
+import com.picpay.exception.ResourceNotFoundException;
 import com.picpay.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -52,9 +53,13 @@ public class UserService {
 
     public Optional<User> getUserById(Long id) {
         try {
-            return userRepository.findById(id);
+            Optional<User> userFind = userRepository.findById(id);
+           userFind.orElseThrow(()-> new ResourceNotFoundException("User with id: "+id+" not found"));
+            return userFind;
         }catch(EntityNotFoundException e){
             throw new EntityNotFoundException(e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -80,8 +85,6 @@ public class UserService {
             receiverUser.get().setBalance(receiverBalanceWithTransfer);
             updateUser(senderUser.get());
             updateUser(receiverUser.get());
-        }else {
-            throw new RuntimeException("ID's dos usuarios não encontrados");
         }
 
     }
