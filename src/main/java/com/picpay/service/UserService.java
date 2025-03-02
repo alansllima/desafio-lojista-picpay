@@ -21,8 +21,22 @@ public class UserService {
 
     public UserDTO createUser(UserDTO userDTO){
         User user = new User(userDTO.firstName(),userDTO.lastName(),userDTO.document(), userDTO.email(),userDTO.password(),userDTO.balance(),userDTO.userType());
+        Optional<User> byId= Optional.empty();
         try {
-            userRepository.save(user);
+            User userSaved = userRepository.save(user);
+            byId=  userRepository.findById(userSaved.getId());
+
+             user = byId.orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+             userDTO = new UserDTO(user.getId(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getDocument(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getBalance(),
+                    user.getUserType());
+
         }catch (DataIntegrityViolationException exception){
             System.out.println("message-------"+ exception.getMessage());
             throw new RuntimeException(exception.getCause());
@@ -66,6 +80,8 @@ public class UserService {
             receiverUser.get().setBalance(receiverBalanceWithTransfer);
             updateUser(senderUser.get());
             updateUser(receiverUser.get());
+        }else {
+            throw new RuntimeException("ID's dos usuarios não encontrados");
         }
 
     }
