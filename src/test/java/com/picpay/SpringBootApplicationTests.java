@@ -27,8 +27,8 @@ class SpringBootApplicationTests {
 	@BeforeAll
 	public static void setup(){
 		users = new ArrayList<>();
-		users.add(new UserDTO("Lara","Portinari", "12345657","lara.portinari@gmail.com","abcde1234", new BigDecimal(10000), UserType.COMMON));
-		users.add(new UserDTO("Bella","Portinari", "123456578","Bella.portinari@gmail.com","1234abcde", new BigDecimal(10000), UserType.COMMON));
+		users.add(new UserDTO(1L,"Lara","Portinari", "12345657","lara.portinari@gmail.com","abcde1234", new BigDecimal(10000), UserType.COMMON));
+		users.add(new UserDTO(2L,"Bella","Portinari", "123456578","Bella.portinari@gmail.com","1234abcde", new BigDecimal(10000), UserType.COMMON));
 
 		transaction = new TransactionDTO(new BigDecimal(5000),1L,2L);
 	}
