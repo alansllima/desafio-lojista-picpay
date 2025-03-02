@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class Transaction {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private BigDecimal transferValue;
 
     private Long sender;
